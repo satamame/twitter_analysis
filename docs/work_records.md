@@ -1,5 +1,18 @@
 # やったことの記録
 
+## VSCode 準備
+
+- pipenv を使っているので、VSCode に以下の設定をする。
+    ```
+    "python.venvPath": ".venv"
+    ```
+- Windows Explorer から Workspace を開けるようにする。
+
+参考
+- [フォルダ右クリックで VSCode で開く](
+    https://satamame.hatenablog.com/entry/2019/05/12/182037)
+
+---
 ## Twitter API 準備
 
 - https://dev.twitter.com/apps へ行く。

@@ -13,6 +13,11 @@ import random
 
 #%%
 
+# 追加するユーザのサンプル数
+sample_user_count = 100
+
+#%%
+
 # lib/token.py に、以下の変数を定義しておくこと
 from lib.token import consumer_token, consumer_secret, access_token, access_secret
 
@@ -32,27 +37,14 @@ col_usrtweets = client.tw_ana.usr_tweets
 
 #%%
 
-# ユーザのサンプル数
-sample_user_count = 10
-
-# id をランダムに抽出 (ignore 列が True なら選ばない)
+# id をランダムに抽出
+# (すでにツイートを取得したユーザと、無視リストは選ばない)
 user_ids = [d['user']['id'] for d in col_users.find(
-    {'ignore': {'$ne': True}}, {'user.id': 1}
+    {'used_as_sample': False, 'ignore': False}, {'user.id': 1}
 )]
 user_ids = random.sample(user_ids, sample_user_count)
 
 #%%
-
-# 抽出されたというフラグを更新
-col_users.update_many({}, {'$set': {'used_as_sample': False}})
-col_users.update_many(
-    {'user.id': {'$in': user_ids}}, {'$set': {'used_as_sample': True}}
-)
-
-#%%
-
-# collection の初期化
-col_usrtweets.delete_many({})
 
 # 抽出されたユーザごとの、tweets の取得と保存
 for i, id in enumerate(user_ids):
@@ -61,10 +53,12 @@ for i, id in enumerate(user_ids):
 
         ret_cnt = len(results)
         ins_cnt = len(ins_result.inserted_ids)
+        print('User #{}: {} tweets retrieved and {} added to DB.'.
+            format(i, ret_cnt, ins_cnt))
 
-        print('User #{}: {} tweets retrieved and {} added to DB.'.format(i, ret_cnt, ins_cnt))
+        # 何件取得したかを users collection の方でも覚えておく
+        col_users.find_one_and_update({'user.id': id},
+            {'$set': {'used_as_sample': True}, '$inc': {'tweet_count': ins_cnt}})
 
-#%%
-
-tweet_count = col_usrtweets.count_documents({})
-print('{} tweets by {} users stored.'.format(tweet_count, sample_user_count))
+    d = col_users.find_one({'user.id': id}, {'tweet_count': 1})
+    print('User #{}: Totally {} tweets added to DB.'.format(i, d['tweet_count']))

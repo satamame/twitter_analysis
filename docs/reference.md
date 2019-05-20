@@ -58,6 +58,7 @@
     https://qiita.com/Syoitu/items/db192385a4b2e4884ed5)
 - [MongoDBにpythonのdatetimeオブジェクトを保存した時の挙動](
     https://qiita.com/TeraBytes/items/d9360bf908f3080f6af0)
+- [PyMongo 3.8.0 documentation](https://api.mongodb.com/python/current/)
 
 ## gensim
 

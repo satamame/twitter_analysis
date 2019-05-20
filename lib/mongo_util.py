@@ -60,5 +60,6 @@ def update_users(col_users, col_twsamples):
                 'user': d['user'],
                 'updated': now,
                 'used_as_sample': False,
-                'ignore': False
+                'ignore': False,
+                'tweet_count': 0
             }, {})

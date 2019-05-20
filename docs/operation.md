@@ -18,8 +18,10 @@
 ### ランダムでユーザを選んでツイートを取得する
 
 1. 必要なら DB の tw_ana.usr_tweets をクリアしておく。
+    - クリアするなら、tw_ana.users の used_as_sample, tweet_count も。
 1. `retrieve_usr_tweets.py` を編集し、選ぶユーザ数を指定する。
 1. `retrieve_usr_tweets.py` を実行する。
+    - 選ばれたユーザは、used_as_sample が true になり、次回から選ばれない。
 
 ---
 ## NoSQLBooster for MongoDB
