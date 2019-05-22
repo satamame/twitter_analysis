@@ -126,3 +126,17 @@ NoSQLBooster for MongoDB は、MongoDB を GUI で操作できるクライアン
 
 - DB のユーザ情報の Collection からランダムにユーザを選んで、各ユーザのツイートを取れるだけ取ってきて、DB に保存します。
 - サンプルツイートでトピックモデルが作れたら、トピックの頻度を特徴量としてユーザを分類してみたいので、そのためのデータです。
+
+---
+## Janome, scikit-learn, gensim インストール
+
+- Project フォルダで
+    ```
+    > pipenv install janome
+    > pipenv install scikit-learn
+    > pipenv install gensim
+    ```
+- 入ったバージョンは以下のとおり
+    - Janome: `0.3.9`
+    - scikit-learn: `0.21.1`
+    - gensim: `3.7.3`

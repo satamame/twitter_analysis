@@ -66,3 +66,5 @@
     https://hironsan.hatenablog.com/entry/clustering-word-vectors)
 - [scikit-learnとgensimでニュース記事を分類する](
     https://qiita.com/yasunori/items/31a23eb259482e4824e2)
+- [gensim: Topic modelling for humans](
+    https://radimrehurek.com/gensim/index.html)

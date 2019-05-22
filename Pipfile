@@ -9,6 +9,9 @@ verify_ssl = true
 tweepy = "*"
 jupyter = "*"
 pymongo = "*"
+janome = "*"
+scikit-learn = "*"
+gensim = "*"
 
 [requires]
 python_version = "3.6"
