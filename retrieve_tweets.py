@@ -35,14 +35,17 @@ since_id = mongo_util.next_id(col_twsamples)
 q = 'です OR ます OR でした OR ました OR でしょう OR ましょう'
 
 count = 0
-for results in twconn.search(q, since_id=since_id):
-    ins_result = col_twsamples.insert_many(results)
-    
-    ret_cnt = len(results)
-    ins_cnt = len(ins_result.inserted_ids)
+try:
+    for results in twconn.search(q, since_id=since_id):
+        ins_result = col_twsamples.insert_many(results)
+        
+        ret_cnt = len(results)
+        ins_cnt = len(ins_result.inserted_ids)
 
-    print('{} tweets retrieved and {} added to DB.'.format(ret_cnt, ins_cnt))
-    count += ins_cnt
+        print('{} tweets retrieved and {} added to DB.'.format(ret_cnt, ins_cnt))
+        count += ins_cnt
+except Exception as e:
+    print('Error: {}'.format(e))
 
 print('Total: {} tweets added and {} stored.'.
     format(count, col_twsamples.count_documents({})))

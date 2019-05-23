@@ -42,7 +42,7 @@ class TwConn:
         """
         if not isinstance(self.auth, tweepy.auth.OAuthHandler):
             raise TypeError(
-                'Instance variable "auth" should be a tweepy.auth.OAuthHandler object. '
+                'Instance variable "auth" should be a tweepy.auth.OAuthHandler object.'
             )
         self.auth.set_access_token(access_token, access_secret)
     
@@ -75,17 +75,14 @@ class TwConn:
                 statuses = api.search(
                     q, max_id=max_id, since_id=since_id, count=count, tweet_mode='extended'
                 )
-            # API からエラーが返ったら15分待って続行する
-            except tweepy.TweepError:
-                print('TweepError. Waiting for 15 minutes.')
+            # API から RateLimitError が返ったら15分待って続行する
+            except tweepy.RateLimitError:
+                print('RateLimitError. Waiting for 15 minutes.')
                 time.sleep(60 * 15)
                 continue
-            # その他のエラーでも、とりあえず同じ処理に
-            except Exception as e:
-                print(e)
-                print('Waiting for 15 minutes as a stop-gap solution.')
-                time.sleep(60 * 15)
-                continue
+            # その他のエラーなら再送出
+            except Exception:
+                raise
             
             if statuses:
                 results = []
@@ -144,17 +141,14 @@ class TwConn:
                 statuses = api.user_timeline(
                     user_id=user_id, max_id=max_id, since_id=since_id, count=count
                 )
-            # エラーが返ったら15分待って続行する
-            except tweepy.TweepError:
-                print('TweepError. Waiting for 15 minutes.')
+            # API から RateLimitError エラーが返ったら15分待って続行する
+            except tweepy.RateLimitError:
+                print('RateLimitError. Waiting for 15 minutes.')
                 time.sleep(60 * 15)
                 continue
-            # その他のエラーでも、とりあえず同じ処理に
-            except Exception as e:
-                print(e)
-                print('Waiting for 15 minutes as a stop-gap solution.')
-                time.sleep(60 * 15)
-                continue
+            # その他のエラーなら再送出
+            except Exception:
+                raise
             
             if statuses:
                 results = []

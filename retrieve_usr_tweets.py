@@ -48,17 +48,22 @@ user_ids = random.sample(user_ids, sample_user_count)
 
 # 抽出されたユーザごとの、tweets の取得と保存
 for i, id in enumerate(user_ids):
-    for results in twconn.user_timeline(user_id=id):
-        ins_result = col_usrtweets.insert_many(results)
+    print('User #{} id: {}'.format(i, id))
+    try:
+        for results in twconn.user_timeline(user_id=id):
+            ins_result = col_usrtweets.insert_many(results)
 
-        ret_cnt = len(results)
-        ins_cnt = len(ins_result.inserted_ids)
-        print('User #{}: {} tweets retrieved and {} added to DB.'.
-            format(i, ret_cnt, ins_cnt))
+            ret_cnt = len(results)
+            ins_cnt = len(ins_result.inserted_ids)
+            print('{} tweets retrieved and {} added to DB.'.format(ret_cnt, ins_cnt))
 
-        # 何件取得したかを users collection の方でも覚えておく
-        col_users.find_one_and_update({'user.id': id},
-            {'$set': {'used_as_sample': True}, '$inc': {'tweet_count': ins_cnt}})
+            # 何件取得したかを users collection の方でも覚えておく
+            col_users.find_one_and_update({'user.id': id},
+                {'$set': {'used_as_sample': True}, '$inc': {'tweet_count': ins_cnt}})
+    except Exception as e:
+        print('Error: {}'.format(e))
+        print('User {} skipped.'.format(id))
+        continue
 
     d = col_users.find_one({'user.id': id}, {'tweet_count': 1})
-    print('User #{}: Totally {} tweets added to DB.'.format(i, d['tweet_count']))
+    print('Totally {} tweets added to DB.'.format(d['tweet_count']))
