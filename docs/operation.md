@@ -23,6 +23,13 @@
 1. `retrieve_usr_tweets.py` を実行する。
     - 選ばれたユーザは、used_as_sample が true になり、次回から選ばれない。
 
+### ランダムで選んだサンプルツイートで辞書を作る
+
+1. `dict_from_tweets.py` を開く。
+1. 使用するツイートの数や、保存するファイル名を設定する。
+    - 同名のファイルは上書きされる。
+1. `dict_from_tweets.py` を実行する。
+
 ---
 ## NoSQLBooster for MongoDB
 

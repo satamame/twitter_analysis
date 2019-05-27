@@ -1,0 +1,3 @@
+1. NoSQLBooster の My Queries で右クリック。
+2. Open Containing Folder in File Explorer
+3. tw_ana フォルダに js ファイルを入れる。

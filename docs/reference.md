@@ -68,3 +68,5 @@
     https://qiita.com/yasunori/items/31a23eb259482e4824e2)
 - [gensim: Topic modelling for humans](
     https://radimrehurek.com/gensim/index.html)
+- [Python用のトピックモデルのライブラリgensim の使い方](
+    http://sucrose.hatenablog.com/entry/2013/10/29/001041)

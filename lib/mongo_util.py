@@ -1,5 +1,6 @@
 import pymongo
 from datetime import datetime
+from janome.tokenizer import Tokenizer
 
 def next_id(collection):
     """
@@ -46,10 +47,11 @@ def update_users(col_users, col_twsamples):
     now = datetime.utcnow()
 
     # サンプルツイートの全ユーザをチェック
-    for d in col_twsamples.find({}, {'user':1}):
+    for d in col_twsamples.find({}, {'user': 1}):
         # 同じ id のユーザがすでに DB にあれば、更新する
         existing = [e for e in col_users.find({'user.id': d['user']['id']})]
         if len(existing) > 0 and existing[0]['updated'] != now:
+            # 1個しか存在しないはずだが、ロジックとしては条件に合うもの全て更新
             col_users.update_many(
                 {'user.id': d['user']['id']}, 
                 {'$set': {'user': d['user'], 'updated': now}}
@@ -63,3 +65,49 @@ def update_users(col_users, col_twsamples):
                 'ignore': False,
                 'tweet_count': 0
             }, {})
+
+def add_tokenized_words(collection, text_field, words_field, count=0):
+    """
+    text_filed を形態素解析して words_field に単語列をセットする
+
+    未処理の document が対象となる。
+    やり直したい場合は document から words_field を削除しておく。
+
+    Parameters
+    ----------
+    collection : pymongo.collection.Collection
+        対象とする collection
+    text_field : str
+        形態素解析の対象とするテキストのフィールド名
+    words_field : str
+        形態素解析の結果をセットするフィールド名
+    count : int
+        処理する件数。0 なら未処理のもの全て
+    """
+
+    # 件数分の id を document (words_field が未セットのもの) から取得
+    if count == 0:
+        tweets = collection.find({words_field: {'$exists': False}}, {'id': 1})
+    else:
+        tweets = collection.find({words_field: {'$exists': False}},{'id': 1}).limit(count)
+    ids = [d['id'] for d in tweets]
+
+    t = Tokenizer()
+    pos_to_pick = ['名詞', '動詞', '形容詞', '形容動詞']
+
+    progress = 0
+    progress_unit = 1000
+    for i, id in enumerate(ids):
+        tweet = collection.find_one({'id': id})
+        text = tweet[text_field]
+        words = [tk.base_form for tk in t.tokenize(text)
+            if tk.part_of_speech.split(',')[0] in pos_to_pick]
+        collection.find_one_and_update({'id': id},
+            {'$set': {words_field: words}}
+        )
+
+        if i + 1 >= progress_unit * (progress + 1):
+            print(i + 1)
+            progress += 1
+    
+    print('{} tweets were tokenized.'.format(len(ids)))

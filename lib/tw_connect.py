@@ -161,6 +161,9 @@ class TwConn:
                     # ユーザ情報を id のみにする
                     status._json['user'] = {'id': user_id}
 
+                    # 次の検索は、最後に取得したツイートの id - 1 から
+                    max_id = status._json['id'] - 1
+
                     # JSON を結果リストに追加する
                     results.append(status._json)
 
