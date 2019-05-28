@@ -1,7 +1,8 @@
 #%%
 """
-dict_from_tweets.py
-サンプルツイートからランダムでサンプリングして特徴語辞書を作る
+corpus_from_tweets.py
+サンプルツイートからランダムでサンプリングしてコーパスにする。
+中間生成物として特徴語辞書を生成する。
 """
 
 #%%
@@ -13,14 +14,16 @@ import re
 
 #%%
 
-# 保存する時の名前
-save_name = 'dictionary.txt'
 # ランダムサンプリングするツイートの数
 sample_count = 1000
 # 使われてるツイートが no_berow 個以下の単語は無視
 no_below = 5
 # 使われてるツイートの割合が no_above 以上の単語は無視
 no_above = 0.3
+
+# 保存する時の名前 (拡張子なし)
+dict_name = 'dictionary'
+corpus_name = 'corpus'
 
 # ストップワード
 stop_words = [
@@ -60,5 +63,13 @@ dict = corpora.Dictionary(words_list)
 dict.filter_extremes(no_below=no_below, no_above=no_above)
 
 # 保存
-dict.save_as_text(save_name)
-print('Dictionary saved.')
+dict_file_name = dict_name + '.dict'
+dict.save(dict_file_name)
+print('Dictionary saved as {}.'.format(dict_file_name))
+dict.save_as_text(dict_name + '.txt')
+
+# コーパス作成 & 保存
+corpus_file_name = corpus_name + '.mm'
+corpus = [dict.doc2bow(words) for words in words_list]
+corpora.MmCorpus.serialize(corpus_file_name, corpus)
+print('Corpus saved as {}.'.format(corpus_file_name))

@@ -23,12 +23,19 @@
 1. `retrieve_usr_tweets.py` を実行する。
     - 選ばれたユーザは、used_as_sample が true になり、次回から選ばれない。
 
-### ランダムで選んだサンプルツイートで辞書を作る
+### ランダムで選んだサンプルツイートで辞書とコーパスを作る
 
-1. `dict_from_tweets.py` を開く。
+1. `corpus_from_tweets.py` を開く。
 1. 使用するツイートの数や、保存するファイル名を設定する。
     - 同名のファイルは上書きされる。
-1. `dict_from_tweets.py` を実行する。
+1. `corpus_from_tweets.py` を実行する。
+
+### 辞書とコーパスを基に分類モデルを作る
+
+1. `make_model.py` を開く。
+1. 読み込む辞書とコーパスの名前を設定する。
+1. 保存するモデルの名前を設定する。
+1. `make_model.py` を実行する。
 
 ---
 ## NoSQLBooster for MongoDB
