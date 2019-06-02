@@ -70,3 +70,9 @@
     https://radimrehurek.com/gensim/index.html)
 - [Python用のトピックモデルのライブラリgensim の使い方](
     http://sucrose.hatenablog.com/entry/2013/10/29/001041)
+- [Corpus Streaming – One Document at a Time](
+    https://radimrehurek.com/gensim/tut1.html#corpus-streaming-one-document-at-a-time)
+- [gensim勉強:1.Corpora and Vector Spaces](
+    https://qiita.com/youyouyou/items/b2fa94af74c583c9d841)
+- [Gensim Tutorial – A Complete Beginners Guide](
+    https://www.machinelearningplus.com/nlp/gensim-tutorial/)

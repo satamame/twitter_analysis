@@ -1,4 +1,6 @@
 print("Count: " + db.usr_tweets.find({}).count())
-print("IDs  : " + db.usr_tweets.distinct('id').length)
+print("IDs  : " + db.usr_tweets.aggregate([{$group: {_id: '$id', count: { $sum: 1 }}}], {allowDiskUse:true, corsor:{}}).count())
+print("Users: " + db.usr_tweets.aggregate([{$group: {_id: '$user.id', count: { $sum: 1 }}}], {allowDiskUse:true, corsor:{}}).count())
 print("Words: " + db.usr_tweets.find({words: {$exists: true}}).count())
-print("IDs  : " + db.usr_tweets.distinct('id', {words: {$exists: true}}).length)
+print("IDs  : " + db.usr_tweets.aggregate([{$match: {words: {$exists: true}}}, {$group: {_id: '$id', count: { $sum: 1 }}}], {allowDiskUse:true, corsor:{}}).count())
+print("Users: " + db.usr_tweets.aggregate([{$match: {words: {$exists: true}}}, {$group: {_id: '$user.id', count: { $sum: 1 }}}], {allowDiskUse:true, corsor:{}}).count())

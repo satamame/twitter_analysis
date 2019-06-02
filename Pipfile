@@ -12,6 +12,7 @@ pymongo = "*"
 janome = "*"
 scikit-learn = "*"
 gensim = "*"
+pandas = "*"
 
 [requires]
 python_version = "3.6"

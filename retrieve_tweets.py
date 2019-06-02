@@ -36,7 +36,7 @@ q = 'です OR ます OR でした OR ました OR でしょう OR ましょう'
 
 count = 0
 try:
-    for results in twconn.search(q, since_id=since_id):
+    for results in twconn.search(q, since_id=since_id, pages=1000):
         ins_result = col_twsamples.insert_many(results)
         
         ret_cnt = len(results)
