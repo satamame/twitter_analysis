@@ -1,8 +1,8 @@
 #%%
 """
-corpus_from_tweets.py
-サンプルツイートからランダムでサンプリングしてコーパスにする。
-中間生成物として特徴語辞書を生成する。
+extract_training_data.py
+サンプルツイートから training_data としてマークされているデータを
+取り出し、特徴語辞書とコーパスを作る。
 """
 
 #%%
@@ -10,20 +10,17 @@ corpus_from_tweets.py
 from pymongo import MongoClient
 from gensim import corpora
 from lib.mongo_util import StreamWords
-import random
 
 #%%
 
-# ランダムサンプリングするツイートの数
-sample_count = 10000
 # 使われてるツイートが no_below 個以下の単語は無視
-no_below = 10
+no_below = 2
 # 使われてるツイートの割合が no_above 以上の単語は無視
 no_above = 0.3
 
 # 保存する時の名前 (拡張子なし)
-dict_name = 'output/dictionary'
-corpus_name = 'output/corpus'
+dict_name = 'data/dictionary'
+corpus_name = 'data/corpus_training'
 
 #%%
 
@@ -34,9 +31,11 @@ col_twsamples = client.tw_ana.tw_samples
 
 #%%
 
-# id をランダムに抽出
-ids = [d['id'] for d in col_twsamples.find({'words': {'$exists': True}}, {'id': 1})]
-ids = random.sample(ids, sample_count)
+# training_data の id を抽出
+ids = [d['id'] for d in col_twsamples.find(
+    {'words': {'$exists': True}, 'training_data': True},
+    {'id': 1}
+)]
 
 #%%
 
@@ -44,7 +43,7 @@ ids = random.sample(ids, sample_count)
 stream = StreamWords(col_twsamples, 'words')
 
 # 辞書作成
-dict = corpora.Dictionary(stream.words_from_col(ids, False))
+dict = corpora.Dictionary(stream.words_from_col(ids))
 dict.filter_extremes(no_below=no_below, no_above=no_above)
 
 # 保存

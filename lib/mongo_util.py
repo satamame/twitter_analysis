@@ -136,7 +136,7 @@ class StreamWords(object):
         r'[0-9:;/\\!?@#$%^&*()\-_=+*.,\'"\[\]｀´ー…～＃｢｣「」]+',
     ]
 
-    def __init__(self, collection, words_field, used_field=''):
+    def __init__(self, collection, words_field):
         """
         コンストラクタ
 
@@ -146,15 +146,12 @@ class StreamWords(object):
             対象とする collection
         words_field : str
             単語列が格納されているフィールド名
-        used_field : str
-            コーパスとして使われたという bool 値を記録するフィールド名。
-            空なら記録しない。
         """
         self.collection = collection
         self.words_field = words_field
         self.used_field = used_field
     
-    def words_from_col(self, ids, init_used_field=True):
+    def words_from_col(self, ids):
         """
         DB の Collection から 単語列を取り出すジェネレータ
 
@@ -162,16 +159,9 @@ class StreamWords(object):
         ----------
         ids : list
             id のリスト。一致する Document から単語列を取り出す。
-        init_used_field : bool
-            self.used_field で指定されたフィールドを最初に初期化するか。
         """
         coll = self.collection
         wrd_f = self.words_field
-        usd_f = self.used_field
-
-        # コーパスとして使われた記録をクリア
-        if len(usd_f) > 0 and init_used_field:
-            coll.update_many({}, {'$set': {usd_f: False}})
 
         for id in ids:
             # DB から words を取得
@@ -181,7 +171,3 @@ class StreamWords(object):
                 words = [w for w in words if not re.fullmatch(sw, w, flags=re.IGNORECASE)]
 
             yield words
-
-            # フラグを立てる
-            if len(usd_f) > 0:
-                coll.update_one({'id': id}, {'$set': {usd_f: True}})
