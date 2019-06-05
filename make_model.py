@@ -22,7 +22,6 @@ corpus_name = 'data/corpus_training'
 # 保存するモデルの名前
 model_name = 'data/lda_model'
 
-
 #%%
 
 # 辞書を読み込む
