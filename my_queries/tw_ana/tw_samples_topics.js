@@ -1,0 +1,1 @@
+db.tw_samples.find({test_data: true, topic_id: 0}, {full_text: 1, topic_id: 1, topic_prob: 1}).sort({topic_prob: -1})

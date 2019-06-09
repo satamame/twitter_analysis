@@ -20,7 +20,7 @@ logging.getLogger('smart_open').setLevel(logging.ERROR)
 verbose = True
 
 # 何個のトピックに分類するか
-num_topics = 3
+num_topics = 5
 
 # 辞書とコーパスの名前 (拡張子なし)
 dict_name = 'data/dictionary'

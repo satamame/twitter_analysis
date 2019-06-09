@@ -1,7 +1,7 @@
 #%%
 """
-cluster_training_data.py
-モデルをファイルから読み込んで、訓練データを分類する。
+cluster_test_data.py
+モデルをファイルから読み込んで、テストデータを分類する。
 結果をトピックごとのテキストファイルに保存（上書き）する。
 """
 
@@ -20,12 +20,12 @@ import re
 minp = 0.5
 
 # 保存先のフォルダ名
-save_folder_name = 'data/topics_training'
+save_folder_name = 'data/topics_test'
 
-# モデルの名前
+# 使うモデルの名前
 model_name = 'data/lda_model'
 
-# 辞書の名前
+# 使う辞書の名前
 dict_name = 'data/dictionary'
 
 #%%
@@ -37,9 +37,9 @@ col_twsamples = client.tw_ana.tw_samples
 
 #%%
 
-# training_data の id を抽出
+# test_data の id を抽出
 ids = [d['id'] for d in col_twsamples.find(
-    {'words': {'$exists': True}, 'training_data': True},
+    {'words': {'$exists': True}, 'test_data': True},
     {'id': 1}
 )]
 
