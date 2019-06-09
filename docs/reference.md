@@ -76,3 +76,9 @@
     https://qiita.com/youyouyou/items/b2fa94af74c583c9d841)
 - [Gensim Tutorial – A Complete Beginners Guide](
     https://www.machinelearningplus.com/nlp/gensim-tutorial/)
+- [トピックモデルを用いた併売の分析 - gensim の LdaModel 使用](
+    http://fits.hatenablog.com/entry/2018/03/13/214609)
+- [gensimのLDAで最適トピック数を決定する方法](
+    https://qiita.com/taiga518/items/3f9f79b6e43f237e6bd8)
+- [LDAとそれでニュース記事レコメンドを作った。](
+    http://tdual.hatenablog.com/entry/2018/04/09/133000)

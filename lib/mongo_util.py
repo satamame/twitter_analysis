@@ -2,6 +2,7 @@ import pymongo
 from datetime import datetime
 from janome.tokenizer import Tokenizer
 import re
+from gensim import models
 
 def next_id(collection):
     """
@@ -79,9 +80,9 @@ def update_users(col_users, col_twsamples):
 
     print('{} users updated and {} users added.'.format(upd_count, add_count))
 
-def add_tokenized_words(collection, text_field, words_field, count=0):
+def add_tokenized_words(collection, with_text, words_field, count=0):
     """
-    text_filed を形態素解析して words_field に単語列をセットする
+    with_textiled を形態素解析して words_field に単語列をセットする
 
     未処理の document が対象となる。
     やり直したい場合は document から words_field を削除しておく。
@@ -90,7 +91,7 @@ def add_tokenized_words(collection, text_field, words_field, count=0):
     ----------
     collection : pymongo.collection.Collection
         対象とする collection
-    text_field : str
+    with_text : str
         形態素解析の対象とするテキストのフィールド名
     words_field : str
         形態素解析の結果をセットするフィールド名
@@ -112,7 +113,7 @@ def add_tokenized_words(collection, text_field, words_field, count=0):
     progress_unit = 1000
     for i, id in enumerate(ids):
         tweet = collection.find_one({'id': id})
-        text = tweet[text_field]
+        text = tweet[with_text]
         words = [tk.base_form for tk in t.tokenize(text)
             if tk.part_of_speech.split(',')[0] in pos_to_pick]
         collection.find_one_and_update({'id': id},
@@ -129,11 +130,19 @@ def add_tokenized_words(collection, text_field, words_field, count=0):
 class StreamWords(object):
 
     # ストップワード (クラス変数)
+    # 単語全体がいずれかにマッチすれば捨てられます
+    #   RT
+    #   http または https
+    #   数字か記号のみ
+    #   1～2文字のひらがな
+    #   1～2文字の英字
+
     stop_words = [
-        r'\d+',
         r'RT',
         r'https?',
         r'[0-9:;/\\!?@#$%^&*()\-_=+*.,\'"\[\]｀´ー…～＃｢｣「」]+',
+        r'[\u3041-\u3096]{1,2}',
+        r'[a-zA-Z]{1,2}',
     ]
 
     def __init__(self, collection, words_field):
@@ -149,7 +158,6 @@ class StreamWords(object):
         """
         self.collection = collection
         self.words_field = words_field
-        self.used_field = used_field
     
     def words_from_col(self, ids):
         """
@@ -159,6 +167,38 @@ class StreamWords(object):
         ----------
         ids : list
             id のリスト。一致する Document から単語列を取り出す。
+
+        yields
+        ------
+        words : list
+            ストップワードが除外された単語列。
+        """
+        coll = self.collection
+        wrd_f = self.words_field
+
+        for id in ids:
+            # DB から words を取得
+            result = coll.find_one({'id': id}, {wrd_f: 1})
+            words = result[wrd_f]
+            # ストップワードを除外する
+            for sw in StreamWords.stop_words:
+                words = [w for w in words if not re.fullmatch(sw, w, flags=re.IGNORECASE)]
+            yield words
+
+    def label_topics(self, ids, model, dict, minp=0.5):
+        """
+        DB の各ツイートを分類し、主トピックの ID をつける
+
+        parameters
+        ----------
+        ids : list
+            id のリスト。一致する Document にトピック ID をつける。
+        model : gensim.models.LdaMulticore
+            トピック分類に使うモデル。
+        dict : gensim.corpora.Dictionary
+            トピック分類に使う特徴語辞書。
+        minp : float
+            主トピックを決める際の最低構成率
         """
         coll = self.collection
         wrd_f = self.words_field
@@ -169,5 +209,21 @@ class StreamWords(object):
             # ストップワードを除外する
             for sw in StreamWords.stop_words:
                 words = [w for w in words if not re.fullmatch(sw, w, flags=re.IGNORECASE)]
+            # ツイートのトピック構成
+            vector = model[dict.doc2bow(words)]
+            # トピックごとの確率を取り出し、最大のものを得る
+            probabilities = [p[1] for p in vector]
+            maxp = max(probabilities)
 
-            yield words
+            # 最大のものが閾値以上であれば、トピック ID と構成率をセット
+            if maxp >= minp:
+                topic_id = probabilities.index(maxp)
+                coll.update_one({'id': id}, {'$set': {
+                    'topic_id': topic_id,
+                    'topic_prob': maxp.item() # numpy.float32 to float
+                }})
+            else:
+                coll.update_one({'id': id}, {'$unset': {
+                    'topic_id': '',
+                    'topic_prob': ''
+                }})

@@ -1,8 +1,8 @@
 #%%
 """
 make_model.py
-辞書とコーパスを読み込んで「潜在的ディリクレ配分法」による
-分類モデルを作る
+辞書とコーパスのファイルを読み込んで
+「潜在的ディリクレ配分法」による分類モデルを作る
 """
 
 #%%
@@ -10,9 +10,16 @@ make_model.py
 from gensim import corpora, models
 from gensim.test.utils import datapath
 from lib.gensim_util import StreamCorpus
+import logging
+
+logging.getLogger('smart_open').setLevel(logging.ERROR)
 
 #%%
 
+# 出来たモデルの、トピックごとのパラメタを表示する
+verbose = True
+
+# 何個のトピックに分類するか
 num_topics = 3
 
 # 辞書とコーパスの名前 (拡張子なし)
@@ -29,16 +36,20 @@ dict_file_name = dict_name + '.dict'
 dict = corpora.Dictionary.load(dict_file_name)
 
 # コーパスを読み込む
-corpus = StreamCorpus(corpus_name + '.txt')
+corpus_file_name = corpus_name + '.txt'
+corpus = StreamCorpus(corpus_file_name)
 
 #%%
 
 # モデルにする
-m = models.LdaModel(
+model = models.LdaMulticore(
     corpus=corpus, id2word=dict, num_topics=num_topics)
 
 #%%
 
 # Save model to disk.
-m.save(model_name)
+model.save(model_name)
+if verbose:
+    for topic in model.print_topics(-1):
+        print(topic)
 print('Model saved as {}.'.format(model_name))

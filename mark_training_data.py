@@ -1,8 +1,8 @@
 #%%
 """
 mark_training_data.py
-サンプルツイートの Collection の中から訓練データを決めて、
-訓練データであることを示すマークをつける。
+サンプルツイートの Collection の中からランダムで訓練データを決めて、
+訓練データであることを示すマークを（既存のマークをクリアしてから）つける。
 """
 
 #%%
@@ -13,7 +13,7 @@ import random
 #%%
 
 # 訓練データの件数
-training_data_count = 10
+training_data_count = 1000
 
 #%%
 
