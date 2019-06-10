@@ -9,4 +9,4 @@ model_name = 'data/lda_model'
 model = models.LdaMulticore.load(model_name)
 
 # トピックの基準となっている単語を表示する
-model.print_topics(num_topics=-1, num_words=30)
+model.print_topics(num_topics=-1, num_words=50)

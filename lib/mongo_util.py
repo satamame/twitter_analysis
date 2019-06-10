@@ -3,6 +3,7 @@ from datetime import datetime
 from janome.tokenizer import Tokenizer
 import re
 from gensim import models
+from lib.stop_words import stop_words
 
 def next_id(collection):
     """
@@ -129,22 +130,6 @@ def add_tokenized_words(collection, with_text, words_field, count=0):
 
 class StreamWords(object):
 
-    # ストップワード (クラス変数)
-    # 単語全体がいずれかにマッチすれば捨てられます
-    #   RT
-    #   http または https
-    #   数字か記号のみ
-    #   1～2文字のひらがな
-    #   1～2文字の英字
-
-    stop_words = [
-        r'RT',
-        r'https?',
-        r'[0-9:;/\\!?@#$%^&*()\-_=+*.,\'"\[\]｀´ー…～＃｢｣「」]+',
-        r'[\u3041-\u3096]{1,2}',
-        r'[a-zA-Z]{1,2}',
-    ]
-
     def __init__(self, collection, words_field):
         """
         コンストラクタ
@@ -181,7 +166,7 @@ class StreamWords(object):
             result = coll.find_one({'id': id}, {wrd_f: 1})
             words = result[wrd_f]
             # ストップワードを除外する
-            for sw in StreamWords.stop_words:
+            for sw in stop_words:
                 words = [w for w in words if not re.fullmatch(sw, w, flags=re.IGNORECASE)]
             yield words
 
@@ -207,7 +192,7 @@ class StreamWords(object):
             # DB から words を取得
             words = coll.find_one({'id': id}, {wrd_f: 1})[wrd_f]
             # ストップワードを除外する
-            for sw in StreamWords.stop_words:
+            for sw in stop_words:
                 words = [w for w in words if not re.fullmatch(sw, w, flags=re.IGNORECASE)]
             # ツイートのトピック構成
             vector = model[dict.doc2bow(words)]
