@@ -13,6 +13,7 @@ janome = "*"
 scikit-learn = "*"
 gensim = "*"
 pandas = "*"
+parso = "*"
 
 [requires]
 python_version = "3.6"

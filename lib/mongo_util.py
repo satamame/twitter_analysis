@@ -83,7 +83,7 @@ def update_users(col_users, col_twsamples):
 
 def add_tokenized_words(collection, with_text, words_field, count=0):
     """
-    with_textiled を形態素解析して words_field に単語列をセットする
+    with_text を形態素解析して words_field に単語列をセットする
 
     未処理の document が対象となる。
     やり直したい場合は document から words_field を削除しておく。
@@ -110,11 +110,22 @@ def add_tokenized_words(collection, with_text, words_field, count=0):
     t = Tokenizer()
     pos_to_pick = ['名詞', '動詞', '形容詞', '形容動詞']
 
+    # ノイズとして取り除くパターン
+    rt = re.compile(r'^RT\s*')
+    mention = re.compile(r'\s*@\w+:\s*')
+    url = re.compile(r'\s*https?://[\w/:%#\$&\?\(\)~\.=\+\-]+\s*')
+
     progress = 0
     progress_unit = 1000
     for i, id in enumerate(ids):
         tweet = collection.find_one({'id': id})
         text = tweet[with_text]
+        
+        # ノイズ除去
+        text = rt.sub('', text)
+        text = mention.sub(' ', text)
+        text = url.sub(' ', text)
+        
         words = [tk.base_form for tk in t.tokenize(text)
             if tk.part_of_speech.split(',')[0] in pos_to_pick]
         collection.find_one_and_update({'id': id},
