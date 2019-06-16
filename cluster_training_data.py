@@ -16,17 +16,20 @@ import re
 
 #%%
 
+# モデル番号
+model_no = '01'
+
 # probability の閾値（これより小さい場合は無視）
 minp = 0.5
 
 # 保存先のフォルダ名
-save_folder_name = 'data/topics_training'
+save_folder_name = 'data/' + model_no + '/topics_training'
 
 # モデルの名前
-model_name = 'data/lda_model'
+model_name = 'data/' + model_no + '/lda_model'
 
 # 辞書の名前
-dict_name = 'data/dictionary'
+dict_name = 'data/' + model_no + '/dictionary'
 
 #%%
 
@@ -89,3 +92,6 @@ for topic_id in range(model.num_topics):
             f.write('{}\t{}\n'.format(
                 result['topic_prob'], regex.sub(' ', result['full_text']))
             )
+
+
+#%%

@@ -19,15 +19,18 @@ logging.getLogger('smart_open').setLevel(logging.ERROR)
 # 出来たモデルの、トピックごとのパラメタを表示するか？
 verbose = True
 
+# モデル番号
+model_no = '01'
+
 # 何個のトピックに分類するか
-num_topics = 5
+num_topics = 8
 
 # 辞書とコーパスの名前 (拡張子なし)
-dict_name = 'data/dictionary'
-corpus_name = 'data/corpus_training'
+dict_name = 'data/' + model_no + '/dictionary'
+corpus_name = 'data/' + model_no + '/corpus_training'
 
 # 保存するモデルの名前
-model_name = 'data/lda_model'
+model_name = 'data/' + model_no + '/lda_model'
 
 #%%
 

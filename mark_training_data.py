@@ -13,7 +13,7 @@ import random
 #%%
 
 # 訓練データの件数
-training_data_count = 10000
+training_data_count = 50000
 
 #%%
 

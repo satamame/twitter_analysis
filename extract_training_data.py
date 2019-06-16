@@ -18,9 +18,12 @@ no_below = 20
 # 使われてるツイートの割合が no_above 以上の単語は無視
 no_above = 0.2
 
+# モデル番号
+model_no = '01'
+
 # 保存する時の名前 (拡張子なし)
-dict_name = 'data/dictionary'
-corpus_name = 'data/corpus_training'
+dict_name = 'data/' + model_no + '/dictionary'
+corpus_name = 'data/' + model_no + '/corpus_training'
 
 #%%
 
