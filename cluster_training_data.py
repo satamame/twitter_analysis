@@ -75,12 +75,9 @@ regex = re.compile(r'\s')
 
 #%%
 
-# トピック ID のリスト
-topic_ids = col_twsamples.find({'topic_id': {'$exists': True}}).distinct('topic_id')
-
 # ファイルに書き出す
-for topic_id in topic_ids:
-    results = col_twsamples.find({'topic_id': topic_id}, {
+for topic_id in range(model.num_topics):
+    results = col_twsamples.find({'training_data': True, 'topic_id': topic_id}, {
         'full_text': 1,
         'topic_id': 1,
         'topic_prob': 1

@@ -16,7 +16,7 @@ logging.getLogger('smart_open').setLevel(logging.ERROR)
 
 #%%
 
-# 出来たモデルの、トピックごとのパラメタを表示する
+# 出来たモデルの、トピックごとのパラメタを表示するか？
 verbose = True
 
 # 何個のトピックに分類するか

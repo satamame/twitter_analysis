@@ -52,22 +52,22 @@
 
 ## PyMongo
 
+- [PyMongo 3.8.0 documentation](https://api.mongodb.com/python/current/)
 - [PythonからMongoDB(DocumentStore)を使ってみる](
     https://hytmachineworks.hatenablog.com/entry/2018/08/03/230503)
 - [pythonでMongoDB入門しよう](
     https://qiita.com/Syoitu/items/db192385a4b2e4884ed5)
 - [MongoDBにpythonのdatetimeオブジェクトを保存した時の挙動](
     https://qiita.com/TeraBytes/items/d9360bf908f3080f6af0)
-- [PyMongo 3.8.0 documentation](https://api.mongodb.com/python/current/)
 
 ## gensim
 
+- [gensim: Topic modelling for humans](
+    https://radimrehurek.com/gensim/index.html)
 - [Pythonで単語分散表現のクラスタリング](
     https://hironsan.hatenablog.com/entry/clustering-word-vectors)
 - [scikit-learnとgensimでニュース記事を分類する](
     https://qiita.com/yasunori/items/31a23eb259482e4824e2)
-- [gensim: Topic modelling for humans](
-    https://radimrehurek.com/gensim/index.html)
 - [Python用のトピックモデルのライブラリgensim の使い方](
     http://sucrose.hatenablog.com/entry/2013/10/29/001041)
 - [Corpus Streaming – One Document at a Time](
@@ -82,3 +82,16 @@
     https://qiita.com/taiga518/items/3f9f79b6e43f237e6bd8)
 - [LDAとそれでニュース記事レコメンドを作った。](
     http://tdual.hatenablog.com/entry/2018/04/09/133000)
+
+# スライド作成
+
+## RISE
+
+- [Jupyter+RISEによるプレゼン環境](
+    http://codecrafthouse.jp/p/2017/05/jupyter-rise-live-presentation/)
+- [VSCode+Markdownでラクラクスライド(PDF)作成[Marp for VSCode]](
+    https://murabitoleg.com/vscode-marp/)
+- [Marp for VS Code](
+    https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode)
+- [Marp(Markdown Presentaiton)の文法まとめ](
+    https://qiita.com/pocket8137/items/27ede821e59c12a1b222)
