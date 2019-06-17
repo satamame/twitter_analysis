@@ -3,7 +3,7 @@
 from gensim import models
 
 # モデル番号
-model_no = '01'
+model_no = '02'
 
 # モデルの名前
 model_name = 'data/' + model_no + '/lda_model'
