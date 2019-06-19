@@ -20,7 +20,7 @@ logging.getLogger('smart_open').setLevel(logging.ERROR)
 verbose = True
 
 # モデル番号
-model_no = '02'
+model_no = '03'
 
 # 何個のトピックに分類するか
 num_topics = 8
@@ -45,8 +45,8 @@ corpus = StreamCorpus(corpus_file_name)
 #%%
 
 # モデルにする
-model = models.LdaMulticore(
-    corpus=corpus, id2word=dict, num_topics=num_topics)
+model = models.LdaModel(
+    corpus=corpus, id2word=dict, num_topics=num_topics, alpha='auto')
 
 #%%
 
@@ -56,3 +56,6 @@ if verbose:
     for topic in model.print_topics(-1):
         print(topic)
 print('Model saved as {}.'.format(model_name))
+
+
+#%%

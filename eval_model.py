@@ -17,7 +17,7 @@ from statistics import mean
 #%%
 
 # モデル番号
-model_no = '02'
+model_no = '03'
 
 # モデルの名前
 model_name = 'data/' + model_no + '/lda_model'
@@ -28,7 +28,7 @@ corpus_name = 'data/' + model_no + '/corpus_training'
 #%%
 
 # モデルを読み込む
-model = models.LdaMulticore.load(model_name)
+model = models.LdaModel.load(model_name)
 
 # コーパスを読み込む
 corpus_file_name = corpus_name + '.txt'

@@ -17,7 +17,7 @@ import re
 #%%
 
 # モデル番号
-model_no = '02'
+model_no = '03'
 
 # probability の閾値（これより小さい場合は無視）
 minp = 0.5
@@ -52,7 +52,7 @@ stream = StreamWords(col_twsamples, 'words')
 #%%
 
 # モデルを読み込む
-model = models.LdaMulticore.load(model_name)
+model = models.LdaModel.load(model_name)
 
 # 辞書を読み込む
 dict_file_name = dict_name + '.dict'
