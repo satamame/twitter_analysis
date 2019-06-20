@@ -126,8 +126,10 @@ def add_tokenized_words(collection, with_text, words_field, count=0):
         text = mention.sub(' ', text)
         text = url.sub(' ', text)
         
+        # Model_04 ～ 代名詞でない名詞のみ抽出
         words = [tk.base_form for tk in t.tokenize(text)
-            if tk.part_of_speech.split(',')[0] in pos_to_pick]
+            if tk.part_of_speech.split(',')[0] == '名詞'
+            and tk.part_of_speech.split(',')[1] != '代名詞']
         collection.find_one_and_update({'id': id},
             {'$set': {words_field: words}}
         )

@@ -71,3 +71,26 @@ Coherence: -5.491802105728876
 
 KL-divergence: 4.820552068097251  
 ![KL-divergence](../data/03/kl-divergence.png)
+
+---
+## model_04
+
+### 条件
+
+|項目|値|
+|-|-|
+|品詞|**'名詞' ('代名詞' 以外)**|
+|ノイズ除去|RT, URL, mention|
+|stop_words|(See stop_words.py)|
+|訓練データ数|50,000|
+|no_below|20|
+|no_above|0.2|
+|num_topics|8|
+|alpha|auto|
+
+### 結果
+Coherence: -6.314667011288767  
+![Coherence](../data/04/coherence.png)
+
+KL-divergence: 5.202539435454777  
+![KL-divergence](../data/04/kl-divergence.png)
