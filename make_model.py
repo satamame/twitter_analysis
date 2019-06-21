@@ -20,7 +20,7 @@ logging.getLogger('smart_open').setLevel(logging.ERROR)
 verbose = True
 
 # モデル番号
-model_no = '04'
+model_no = '05'
 
 # 何個のトピックに分類するか
 num_topics = 8

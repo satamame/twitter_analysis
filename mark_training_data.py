@@ -19,8 +19,8 @@ training_data_count = 50000
 
 # データベースの準備
 client = MongoClient()
-# API で適当に取ってきた tweets は、tw_samples に入っている
-col_twsamples = client.tw_ana.tw_samples
+# 重複を削除した サンプルツイートの Collection
+col_twsamples = client.tw_ana.tw_text
 
 #%%
 

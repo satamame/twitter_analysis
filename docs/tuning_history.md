@@ -74,6 +74,7 @@ KL-divergence: 4.820552068097251
 
 ---
 ## model_04
+d7a69c10136e54ab0bf30ccbac49f06c0a0e987b
 
 ### 条件
 
@@ -94,3 +95,18 @@ Coherence: -6.314667011288767
 
 KL-divergence: 5.202539435454777  
 ![KL-divergence](../data/04/kl-divergence.png)
+
+---
+## model_05
+
+### 条件
+
+* サンプルツイートから重複を取り除いた。
+* それ以外は model_04 と同じ。
+
+### 結果
+Coherence: -6.062594342322906  
+![Coherence](../data/05/coherence.png)
+
+KL-divergence: 5.008528300694057  
+![KL-divergence](../data/05/kl-divergence.png)

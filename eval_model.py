@@ -17,7 +17,7 @@ from statistics import mean
 #%%
 
 # モデル番号
-model_no = '04'
+model_no = '05'
 
 # モデルの名前
 model_name = 'data/' + model_no + '/lda_model'

@@ -21,8 +21,10 @@ count = 0
 
 # データベースの準備
 client = MongoClient()
-# API で適当に取ってきた サンプルツイートの Collection
-col_twsamples = client.tw_ana.tw_samples
+# 重複を削除した サンプルツイートの Collection
+col_twsamples = client.tw_ana.tw_text
+
+#%%
 
 if clear:
     col_twsamples.update_many({}, {'$unset': {'words': ''}})

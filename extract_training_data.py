@@ -19,7 +19,7 @@ no_below = 20
 no_above = 0.2
 
 # モデル番号
-model_no = '04'
+model_no = '05'
 
 # 保存する時の名前 (拡張子なし)
 dict_name = 'data/' + model_no + '/dictionary'
@@ -29,8 +29,8 @@ corpus_name = 'data/' + model_no + '/corpus_training'
 
 # データベースの準備
 client = MongoClient()
-# API で適当に取ってきた サンプルツイートの Collection
-col_twsamples = client.tw_ana.tw_samples
+# 重複を削除した サンプルツイートの Collection
+col_twsamples = client.tw_ana.tw_text
 
 #%%
 

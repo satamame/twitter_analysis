@@ -40,6 +40,12 @@
 
 - [自然言語処理による文書分類の基礎の基礎、トピックモデルを学ぶ](
     https://qiita.com/icoxfog417/items/7c944cb29dd7cdf5e2b1)
+- [トピックモデル（LDA）で初学者に分かりづらいポイントについての解説](
+    http://acro-engineer.hatenablog.com/entry/2017/12/11/120000)
+- [tfidf、LSI、LDAの違いについて調べてみた](
+    https://hivecolor.com/id/65)
+- [【入門】トピックモデルとは？トピック分析の３つの手法を解説](
+    https://spjai.com/topic-model/)
 - [SNOW D11:話題分類単語辞書](http://www.jnlp.org/SNOW/D11)
 - [SNOW D18:日本語感情表現辞書](http://www.jnlp.org/SNOW/D18)
 

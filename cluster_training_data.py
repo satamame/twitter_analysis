@@ -17,7 +17,7 @@ import re
 #%%
 
 # モデル番号
-model_no = '04'
+model_no = '05'
 
 # probability の閾値（これより小さい場合は無視）
 minp = 0.5
@@ -35,8 +35,8 @@ dict_name = 'data/' + model_no + '/dictionary'
 
 # データベースの準備
 client = MongoClient()
-# API で適当に取ってきた サンプルツイートの Collection
-col_twsamples = client.tw_ana.tw_samples
+# 重複を削除した サンプルツイートの Collection
+col_twsamples = client.tw_ana.tw_text
 
 #%%
 
@@ -63,6 +63,13 @@ dict = corpora.Dictionary.load(dict_file_name)
 # DB 上で分類し、構成率が最大であるトピックの ID を記録する
 # ファイルへの書き出しは、DB を読みながらおこなう
 stream.label_topics(ids, model, dict, minp)
+
+#%%
+
+# トピックの確率で降順ソートできるようインデックスを追加する
+# (Collection につき1回やればよい。)
+
+# col_twsamples.create_index([('topic_prob', DESCENDING)])
 
 #%%
 
