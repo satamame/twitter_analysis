@@ -17,10 +17,10 @@ logging.getLogger('smart_open').setLevel(logging.ERROR)
 #%%
 
 # 出来たモデルの、トピックごとのパラメタを表示するか？
-verbose = True
+verbose = False
 
 # モデル番号
-model_no = '05'
+model_no = '06'
 
 # 何個のトピックに分類するか
 num_topics = 8

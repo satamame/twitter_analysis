@@ -14,12 +14,12 @@ from lib.mongo_util import StreamWords
 #%%
 
 # 使われてるツイートが no_below 個以下の単語は無視
-no_below = 20
+no_below = 100
 # 使われてるツイートの割合が no_above 以上の単語は無視
-no_above = 0.2
+no_above = 0.1
 
 # モデル番号
-model_no = '05'
+model_no = '06'
 
 # 保存する時の名前 (拡張子なし)
 dict_name = 'data/' + model_no + '/dictionary'
