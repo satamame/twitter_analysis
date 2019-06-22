@@ -20,10 +20,10 @@ logging.getLogger('smart_open').setLevel(logging.ERROR)
 verbose = False
 
 # モデル番号
-model_no = '06'
+model_no = '07'
 
 # 何個のトピックに分類するか
-num_topics = 8
+num_topics = 4
 
 # 辞書とコーパスの名前 (拡張子なし)
 dict_name = 'data/' + model_no + '/dictionary'

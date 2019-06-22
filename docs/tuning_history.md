@@ -114,6 +114,30 @@ KL-divergence: 5.008528300694057
 
 ---
 ## model_06
+717e698644b5bc284b84d5e9414e5e2956e8c2e8
+
+### 条件
+
+|項目|値|
+|-|-|
+|品詞|'名詞' ('代名詞' 以外)|
+|ノイズ除去|RT, URL, mention|
+|stop_words|(See stop_words.py)|
+|訓練データ数|50,000|
+|no_below|**100**|
+|no_above|**0.1**|
+|num_topics|8|
+|alpha|auto|
+
+### 結果
+Coherence: -5.784420267443469  
+![Coherence](../data/06/coherence.png)
+
+KL-divergence: 6.001177881445203  
+![KL-divergence](../data/06/kl-divergence.png)
+
+---
+## model_07
 
 ### 条件
 
@@ -125,12 +149,13 @@ KL-divergence: 5.008528300694057
 |訓練データ数|50,000|
 |no_below|100|
 |no_above|0.1|
-|num_topics|8|
+|num_topics|**4**|
 |alpha|auto|
 
 ### 結果
-Coherence: -5.784420267443469  
-![Coherence](../data/06/coherence.png)
 
-KL-divergence: 6.001177881445203  
-![KL-divergence](../data/06/kl-divergence.png)
+Coherence: -4.271025552309344
+![Coherence](../data/07/coherence.png)
+
+KL-divergence: 4.60769506295522
+![KL-divergence](../data/07/kl-divergence.png)

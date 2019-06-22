@@ -17,7 +17,7 @@ import re
 #%%
 
 # モデル番号
-model_no = '06'
+model_no = '07'
 
 # probability の閾値（これより小さい場合はファイルには出さない）
 minp = 0.5

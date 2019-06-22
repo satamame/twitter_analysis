@@ -19,7 +19,7 @@ no_below = 100
 no_above = 0.1
 
 # モデル番号
-model_no = '06'
+model_no = '07'
 
 # 保存する時の名前 (拡張子なし)
 dict_name = 'data/' + model_no + '/dictionary'
