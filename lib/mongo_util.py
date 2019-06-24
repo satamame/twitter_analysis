@@ -81,7 +81,8 @@ def update_users(col_users, col_twsamples):
 
     print('{} users updated and {} users added.'.format(upd_count, add_count))
 
-def add_tokenized_words(collection, with_text, words_field, count=0):
+def add_tokenized_words(collection, with_text, words_field,
+                        *, count=0, test_data_only=False):
     """
     with_text を形態素解析して words_field に単語列をセットする
 
@@ -98,17 +99,38 @@ def add_tokenized_words(collection, with_text, words_field, count=0):
         形態素解析の結果をセットするフィールド名
     count : int
         処理する件数。0 なら未処理のもの全て
+    test_data_only : bool
+        test_data フィールドが True のものだけを対象とするか？
     """
 
     # 件数分の id を document (words_field が未セットのもの) から取得
     if count == 0:
-        tweets = collection.find({words_field: {'$exists': False}}, {'id': 1})
+        if test_data_only:
+            tweets = collection.find(
+                {words_field: {'$exists': False}, 'test_data': True},
+                {'id': 1}
+            )
+        else:
+            tweets = collection.find(
+                {words_field: {'$exists': False}},
+                {'id': 1}
+            )
     else:
-        tweets = collection.find({words_field: {'$exists': False}},{'id': 1}).limit(count)
+        if test_data_only:
+            tweets = collection.find(
+                {words_field: {'$exists': False}, 'test_data': True},
+                {'id': 1}
+            ).limit(count)
+        else:
+            tweets = collection.find(
+                {words_field: {'$exists': False}},
+                {'id': 1}
+            ).limit(count)
+
     ids = [d['id'] for d in tweets]
 
     t = Tokenizer()
-    pos_to_pick = ['名詞', '動詞', '形容詞', '形容動詞']
+    pos_to_pick = ['名詞', '動詞', '形容詞', '形容動詞'] # 未使用
 
     # ノイズとして取り除くパターン
     rt = re.compile(r'^RT\s*')

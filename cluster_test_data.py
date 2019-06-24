@@ -16,24 +16,27 @@ import re
 
 #%%
 
-# probability の閾値（これより小さい場合は無視）
+# モデル番号
+model_no = '07'
+
+# probability の閾値（これより小さい場合はどのトピックにも入れない）
 minp = 0.5
 
 # 保存先のフォルダ名
-save_folder_name = 'data/topics_test'
+save_folder_name = 'data/' + model_no + '/test_training'
 
 # 使うモデルの名前
-model_name = 'data/lda_model'
+model_name = 'data/' + model_no + '/lda_model'
 
 # 使う辞書の名前
-dict_name = 'data/dictionary'
+dict_name = 'data/' + model_no + '/dictionary'
 
 #%%
 
 # データベースの準備
 client = MongoClient()
-# API で適当に取ってきた サンプルツイートの Collection
-col_twsamples = client.tw_ana.tw_samples
+# 重複を削除した サンプルツイートの Collection
+col_twsamples = client.tw_ana.tw_text
 
 #%%
 
@@ -49,7 +52,7 @@ stream = StreamWords(col_twsamples, 'words')
 #%%
 
 # モデルを読み込む
-model = models.LdaMulticore.load(model_name)
+model = models.LdaModel.load(model_name)
 
 # 辞書を読み込む
 dict_file_name = dict_name + '.dict'

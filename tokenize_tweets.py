@@ -30,4 +30,4 @@ if clear:
     col_twsamples.update_many({}, {'$unset': {'words': ''}})
 
 # 実行
-mongo_util.add_tokenized_words(col_twsamples, 'full_text', 'words', count)
+mongo_util.add_tokenized_words(col_twsamples, 'full_text', 'words', count=count)

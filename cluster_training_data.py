@@ -19,16 +19,16 @@ import re
 # モデル番号
 model_no = '07'
 
-# probability の閾値（これより小さい場合はファイルには出さない）
+# probability の閾値（これより小さい場合はどのトピックにも入れない）
 minp = 0.5
 
 # 保存先のフォルダ名
 save_folder_name = 'data/' + model_no + '/topics_training'
 
-# モデルの名前
+# 使うモデルの名前
 model_name = 'data/' + model_no + '/lda_model'
 
-# 辞書の名前
+# 使う辞書の名前
 dict_name = 'data/' + model_no + '/dictionary'
 
 #%%
