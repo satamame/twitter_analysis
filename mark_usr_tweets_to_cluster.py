@@ -13,7 +13,7 @@ import random
 #%%
 
 # 選ぶユーザの数
-usr_count = 100
+usr_count = 1000
 
 #%%
 
