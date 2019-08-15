@@ -4,11 +4,21 @@
 
 ### サンプルツイートを取得する
 
+1. Twitter アプリ作成時に取得したトークンを `lib/token.py` に設定しておく。
 1. 必要なら DB の tw_ana.tw_samples をクリアしておく。
 1. `retrieve_tweets.py` を開く。
 1. 必要なら編集して、検索キーワードを指定する。
 1. `retrieve_tweets.py` を実行する。
     - (それなりに時間がかかります。)
+
+### テキストのみの Collection を作る (任意だが推奨)
+
+1. `gen_text_only.py` を開く。
+1. 必要なら編集して、元となるサンプルツイート Collection や、作成するテキストのみの Collection を指定する。
+1. `gen_text_only.py` を実行する。
+    - full_text というフィールドを持つ Collection が作成/上書きされる。
+    - 同じ full_text を持つ Document があった場合は追加しません (これにより重複するツイートを削除できます)。
+1. このステップをした場合は、以下の手順の "サンプルツイート" として、テキストのみの Collection が使えます。
 
 ### サンプルツイートを形態素解析する
 **mongo_util.py で使う品詞などを変更した場合はここからやり直す**
@@ -34,7 +44,7 @@
     - 辞書とコーパスの名前（拡張子はつけなくて良い)
 1. `extract_training_data.py` を実行する。
 
-### 辞書とコーパスを基に分類モデルを作る
+### 辞書とコーパスを基に LDA モデルを作る
 
 1. `make_model.py` を開く。
 1. 何個のトピックに分類するかを設定する。
@@ -112,8 +122,20 @@
 1. `tokenize_usr_tweets.py` を開く。
 1. 必要なら編集して、何件処理するか指定する (通常は 0 (すべて))。
 1. 形態素解析の品詞や方法が変わった場合は `clear = True` にする。
+    - すでにある形態素解析の結果を削除したくない場合は `True` にしないよう、注意してください。
 1. `tokenize_tweets.py` を実行する。
     - (私の環境では、1000件処理するのに10～15分くらいかかりました。)
+
+### ユーザツイートを分類する
+
+1. `cluster_usr_tweets.py` を開く。
+1. 必要なら編集して、モデル番号や閾値を決める。
+1. 必要なら実行前に `topic_id`, `topic_prob` フィールドをクリアしておく。
+    ```
+    col_usrtweets.update_many({}, {'$unset': {'topic_id': '', 'topic_prob': ''}})
+    ```
+1. `cluster_usr_tweets.py` を実行する。
+    - テストデータとしてマークされたユーザツイートに、topic_id と topic_prob がセットされる。
 
 ---
 ## NoSQLBooster for MongoDB

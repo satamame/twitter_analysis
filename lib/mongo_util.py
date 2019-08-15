@@ -223,7 +223,7 @@ class StreamWords(object):
         coll = self.collection
         wrd_f = self.words_field
 
-        for id in ids:
+        for i, id in enumerate(ids):
             # DB から words を取得
             words = coll.find_one({'id': id}, {wrd_f: 1})[wrd_f]
             # ストップワードを除外する
@@ -236,14 +236,21 @@ class StreamWords(object):
             maxp = max(probabilities)
 
             # 最大のものが閾値以上であれば、トピック ID と構成率をセット
-            if maxp >= minp:
-                topic_id = probabilities.index(maxp)
-                coll.update_one({'id': id}, {'$set': {
-                    'topic_id': topic_id,
-                    'topic_prob': maxp.item() # numpy.float32 to float
-                }})
-            else:
-                coll.update_one({'id': id}, {'$unset': {
-                    'topic_id': '',
-                    'topic_prob': ''
-                }})
+            # if maxp >= minp:
+
+            topic_id = probabilities.index(maxp)
+            coll.update_one({'id': id}, {'$set': {
+                'topic_id': topic_id,
+                'topic_prob': maxp.item() # numpy.float32 to float
+            }})
+
+            # さもなくば構成率のみセット
+            # else:
+            #     coll.update_one({'id': id},
+            #         {
+            #             '$unset': {'topic_id': ''},
+            #             'topic_prob': maxp.item()
+            #         })
+
+            if i % 1000 == 0:
+                print('{}/{} tweets processed.'.format(i, len(ids)))

@@ -37,13 +37,17 @@ col_usrtweets = client.tw_ana.usr_tweets
 
 #%%
 
-# test_data の id を抽出
+# test_data の id を抽出 (未処理のもの)
 ids = [d['id'] for d in col_usrtweets.find(
-    {'words': {'$exists': True}, 'test_data': True},
+    {'words': {'$exists': True}, 'test_data': True,
+        '$or': [{'topic_id': {'$exists': False}}, {'topic_prob': {'$exists': False}}]
+    },
     {'id': 1}
 )]
 
-# サンプルツイートから単語列を取得するイテラブル
+#%%
+
+# ユーザツイートから単語列を取得するイテラブル
 stream = StreamWords(col_usrtweets, 'words')
 
 #%%
