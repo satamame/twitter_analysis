@@ -61,7 +61,7 @@ dict = corpora.Dictionary.load(dict_file_name)
 #%%
 
 # DB 上で分類し、構成率が最大であるトピックの ID を記録する
-# ファイルへの書き出しは、DB を読みながらおこなう
+# ファイルへの書き出しは、その後 DB を読みながらおこなう
 stream.label_topics(ids, model, dict, minp)
 
 #%%

@@ -137,6 +137,15 @@
 1. `cluster_usr_tweets.py` を実行する。
     - テストデータとしてマークされたユーザツイートに、topic_id と topic_prob がセットされる。
 
+### ユーザごとのトピック別文書数をカウントする
+
+1. `count_usr_topics.py` を開いて実行する。
+    - `col_usrtopics` で指定された Collection に、ユーザごとのトピック別文書数が格納される。
+
+### ユーザを分類する
+
+
+
 ---
 ## NoSQLBooster for MongoDB
 

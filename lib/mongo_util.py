@@ -252,5 +252,5 @@ class StreamWords(object):
             #             'topic_prob': maxp.item()
             #         })
 
-            if i % 1000 == 0:
-                print('{}/{} tweets processed.'.format(i, len(ids)))
+            if (i + 1) % 1000 == 0:
+                print('{}/{} tweets processed.'.format(i + 1, len(ids)))
