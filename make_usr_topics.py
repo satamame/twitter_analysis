@@ -6,11 +6,9 @@ make_usr_topics.py
 """
 
 #%%
-
 from pymongo import MongoClient
 
 #%%
-
 # データベースの準備
 client = MongoClient()
 # ユーザツイートの Collection
@@ -19,7 +17,10 @@ col_usrtweets = client.tw_ana.usr_tweets
 col_usrtopics = client.tw_ana.user_topics
 
 #%%
+# カウントする条件としての最低構成比
+minp = 0.5
 
+#%%
 # ユーザ ID を取得する
 pipe = [
     {'$match': {
@@ -34,7 +35,6 @@ usr_ids = [d['_id'] for d in usr_ids]
 print('{} users on DB.'.format(len(usr_ids)))
 
 #%%
-
 # ユーザごとの各トピックの出現数を記録してゆく。
 # トピック数は 4 であることが分かっている。
 
@@ -43,7 +43,11 @@ for i, id in enumerate(usr_ids):
     tp_cnts = [0] * 4
     for tp_id in range(len(tp_cnts)):
         tp_cnt = col_usrtweets.count_documents(
-            {'user.id': id, 'topic_id': tp_id}
+            {
+                'user.id': id,
+                'topic_id': tp_id,
+                'topic_prob': {'$gte': minp}
+            }
         )
         tp_cnts[tp_id] = tp_cnt
     

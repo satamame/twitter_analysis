@@ -139,12 +139,17 @@
 
 ### ユーザごとのトピック別文書数をカウントする
 
-1. `count_usr_topics.py` を開いて実行する。
+1. `count_usr_topics.py` を開く。
+1. 必要なら編集して閾値を決める。
+1. `count_usr_topics.py` を実行する。
     - `col_usrtopics` で指定された Collection に、ユーザごとのトピック別文書数が格納される。
 
 ### ユーザを分類する
 
-
+1. `cluster_users.py` を開く。
+1. "エルボー法でクラスタ数の見当を付ける" までを実行する。
+1. グラフがかくっと曲がっているところのクラスタ数を、`grp_cnt` にセットする。
+1. 最後まで実行して可視化する。
 
 ---
 ## NoSQLBooster for MongoDB

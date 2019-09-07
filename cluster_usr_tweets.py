@@ -20,6 +20,7 @@ import re
 model_no = '07'
 
 # probability の閾値（これより小さい場合はどのトピックにも入れない）
+# *** このパラメタは、今は無視しています (mongo_util.StreamWords) ***
 minp = 0.5
 
 # 使うモデルの名前

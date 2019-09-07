@@ -97,6 +97,11 @@
     http://fits.hatenablog.com/entry/2018/03/13/214609)  
     (alpha の値による影響を考察している)
 
+## k-means
+
+- [k-meansの最適なクラスター数を調べる方法](https://qiita.com/deaikei/items/11a10fde5bb47a2cf2c2)
+- [scikit-learn による最も基本的なクラスタリング分析](https://qiita.com/ynakayama/items/1223b6844a1a044e2e3b)
+
 # スライド作成
 
 ## RISE
