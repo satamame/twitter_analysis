@@ -99,8 +99,11 @@
 
 ## k-means
 
-- [k-meansの最適なクラスター数を調べる方法](https://qiita.com/deaikei/items/11a10fde5bb47a2cf2c2)
-- [scikit-learn による最も基本的なクラスタリング分析](https://qiita.com/ynakayama/items/1223b6844a1a044e2e3b)
+- [k平均法 - Wikipedia](https://ja.wikipedia.org/wiki/K平均法)
+- [scikit-learn による最も基本的なクラスタリング分析](
+    https://qiita.com/ynakayama/items/1223b6844a1a044e2e3b)
+- [k-meansの最適なクラスター数を調べる方法](
+    https://qiita.com/deaikei/items/11a10fde5bb47a2cf2c2)
 
 # スライド作成
 
