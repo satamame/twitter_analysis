@@ -7,6 +7,7 @@ verify_ssl = true
 
 [packages]
 tweepy = "*"
+jupyter-core = ">=4.11.2"
 jupyter = "*"
 pymongo = "*"
 janome = "*"
